@@ -1,0 +1,2180 @@
+<!DOCTYPE html>
+<html lang="es" class="h-full bg-[#080911] text-slate-100">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Andrade's STREAMING - CRM & Matriz Excel</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              cyan: '#00f2fe',
+              pink: '#ff007f',
+              purple: '#7928ca',
+              dark: '#080911',
+              card: '#121426',
+              border: '#1f223d'
+            },
+            whatsapp: {
+              500: '#25D366',
+              600: '#128C7E',
+              700: '#075E54'
+            }
+          },
+          boxShadow: {
+            'neon-cyan': '0 0 20px rgba(0, 242, 254, 0.35)',
+            'neon-pink': '0 0 20px rgba(255, 0, 127, 0.35)',
+            'neon-purple': '0 0 25px rgba(121, 40, 202, 0.4)'
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Google Fonts: Inter & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .font-mono-code { font-family: 'JetBrains Mono', monospace; }
+    
+    .glow-cyan-text { text-shadow: 0 0 10px rgba(0, 242, 254, 0.6); }
+    .glow-pink-text { text-shadow: 0 0 10px rgba(255, 0, 127, 0.6); }
+
+    /* Custom Excel Grid Styling */
+    .excel-table th {
+      background-color: #16182c;
+      color: #94a3b8;
+      font-weight: 700;
+      border: 1px solid #232747;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .excel-table td {
+      border: 1px solid #1f223d;
+      font-size: 12px;
+      padding: 6px 10px;
+    }
+    .excel-table tr:hover td {
+      background-color: #1a1d38;
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #080911; }
+    ::-webkit-scrollbar-thumb { background: #1f223d; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #00f2fe; }
+
+    /* WhatsApp Chat Background */
+    .chat-bg {
+      background-color: #0b141a;
+      background-image: radial-gradient(#1f2c34 1.2px, transparent 1.2px);
+      background-size: 18px 18px;
+    }
+  </style>
+</head>
+<body class="h-full flex flex-col md:flex-row overflow-hidden bg-[#080911] text-slate-100">
+
+  <!-- SIDEBAR DESKTOP -->
+  <aside class="hidden md:flex flex-col w-72 bg-[#0c0d1a] border-r border-[#1f223d] shrink-0">
+    
+    <!-- Branding Header -->
+    <div class="p-5 border-b border-[#1f223d] bg-gradient-to-b from-[#13152c] to-[#0c0d1a]">
+      <div class="flex flex-col items-center text-center space-y-2">
+        
+        <!-- Logo Emblem -->
+        <div class="relative w-16 h-16 flex items-center justify-center">
+          <div class="absolute inset-0 rounded-full bg-gradient-to-tr from-[#00f2fe] via-[#7928ca] to-[#ff007f] blur-md opacity-70 animate-pulse"></div>
+          <svg class="w-16 h-16 relative drop-shadow-lg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="50" cy="50" r="44" stroke="url(#logo_ring_grad)" stroke-width="4.5" />
+            <path d="M 50 15 L 24 82 L 39 82 L 46 64 L 54 64 L 61 82 L 76 82 L 50 15 Z" fill="url(#metal_grad)" stroke="#ffffff" stroke-width="0.5"/>
+            <path d="M 47 42 L 56 48 L 47 54 Z" fill="url(#play_grad)" />
+            <defs>
+              <linearGradient id="logo_ring_grad" x1="0" y1="0" x2="100" y2="100">
+                <stop offset="0%" stop-color="#00f2fe" />
+                <stop offset="50%" stop-color="#7928ca" />
+                <stop offset="100%" stop-color="#ff007f" />
+              </linearGradient>
+              <linearGradient id="metal_grad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#ffffff" />
+                <stop offset="50%" stop-color="#e2e8f0" />
+                <stop offset="100%" stop-color="#94a3b8" />
+              </linearGradient>
+              <linearGradient id="play_grad" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#ff007f" />
+                <stop offset="100%" stop-color="#00f2fe" />
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+
+        <div>
+          <h1 class="font-extrabold text-lg tracking-wider text-white uppercase italic">
+            Andrade's <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#00f2fe] via-purple-400 to-[#ff007f]">STREAMING</span>
+          </h1>
+          <div class="h-0.5 w-full bg-gradient-to-r from-[#00f2fe] via-purple-500 to-[#ff007f] my-1 rounded-full"></div>
+          <span class="text-[9px] font-extrabold tracking-widest uppercase text-slate-300 block glow-pink-text">
+            TU ENTRETENIMIENTO, AL MEJOR PRECIO
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navigation Bar -->
+    <nav class="flex-1 p-4 space-y-2 overflow-y-auto">
+      <button onclick="switchTab('deliver')" id="nav-desktop-deliver" class="nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-[#181a33] hover:text-white transition-all font-semibold text-sm">
+        <i class="fa-solid fa-bolt-lightning text-lg text-[#00f2fe]"></i>
+        <span>Despacho Rápido</span>
+      </button>
+
+      <button onclick="switchTab('express-matrix')" id="nav-desktop-express-matrix" class="nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-[#181a33] hover:text-white transition-all font-semibold text-sm">
+        <i class="fa-solid fa-table-cells text-lg text-emerald-400"></i>
+        <span>Matriz Excel Express+</span>
+      </button>
+
+      <button onclick="switchTab('original-section')" id="nav-desktop-original-section" class="nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-[#181a33] hover:text-white transition-all font-semibold text-sm">
+        <i class="fa-solid fa-star text-lg text-amber-400"></i>
+        <span>Cuentas Originales ⭐</span>
+      </button>
+
+      <button onclick="switchTab('inventory')" id="nav-desktop-inventory" class="nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-[#181a33] hover:text-white transition-all font-semibold text-sm">
+        <i class="fa-solid fa-boxes-stacked text-lg text-purple-400"></i>
+        <span>Inventario Cuentas Madre</span>
+      </button>
+
+      <button onclick="switchTab('dashboard')" id="nav-desktop-dashboard" class="nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-[#181a33] hover:text-white transition-all font-semibold text-sm">
+        <i class="fa-solid fa-chart-line text-lg text-[#ff007f]"></i>
+        <span>Ganancias & Finanzas</span>
+      </button>
+    </nav>
+
+    <!-- Stock Quick Overview Badge -->
+    <div class="p-4 m-3 bg-[#121426] rounded-xl border border-[#1f223d] space-y-2">
+      <div class="flex items-center justify-between text-xs font-bold">
+        <span class="text-slate-400">Stock Total Libre</span>
+        <span id="sidebar-stock-count" class="text-[#00f2fe]">0 Perfiles</span>
+      </div>
+      <div class="w-full bg-[#080911] h-2 rounded-full overflow-hidden">
+        <div id="sidebar-stock-bar" class="bg-gradient-to-r from-[#00f2fe] to-[#ff007f] h-full w-0 transition-all duration-500"></div>
+      </div>
+      <button onclick="openBulkModal()" class="w-full py-2 px-3 bg-gradient-to-r from-[#00f2fe]/20 to-[#ff007f]/20 hover:from-[#00f2fe]/30 hover:to-[#ff007f]/30 border border-[#00f2fe]/40 text-[#00f2fe] font-bold text-xs rounded-lg transition-colors flex items-center justify-center space-x-2">
+        <i class="fa-solid fa-file-import"></i>
+        <span>+ Cargar Cuentas Madre</span>
+      </button>
+    </div>
+
+  </aside>
+
+  <!-- MOBILE HEADER -->
+  <header class="md:hidden bg-[#0c0d1a] border-b border-[#1f223d] px-4 py-3 flex items-center justify-between shrink-0">
+    <div class="flex items-center space-x-3">
+      <div class="w-9 h-9 rounded-full bg-gradient-to-tr from-[#00f2fe] via-[#7928ca] to-[#ff007f] p-0.5 shadow-lg">
+        <div class="w-full h-full bg-[#0c0d1a] rounded-full flex items-center justify-center">
+          <i class="fa-solid fa-play text-xs text-[#00f2fe]"></i>
+        </div>
+      </div>
+      <div>
+        <h1 class="font-extrabold text-sm text-white italic tracking-wider">
+          Andrade's <span class="text-[#ff007f]">STREAMING</span>
+        </h1>
+        <span class="text-[8px] text-[#00f2fe] font-bold block tracking-widest">TU ENTRETENIMIENTO, AL MEJOR PRECIO</span>
+      </div>
+    </div>
+    <button onclick="openBulkModal()" class="px-3 py-1.5 bg-gradient-to-r from-[#00f2fe] to-[#ff007f] text-white rounded-lg text-xs font-bold shadow-md flex items-center space-x-1">
+      <i class="fa-solid fa-plus"></i>
+      <span>Stock</span>
+    </button>
+  </header>
+
+  <!-- MAIN CONTAINER -->
+  <main class="flex-1 overflow-y-auto p-4 md:p-8 bg-[#080911] pb-24 md:pb-8">
+
+    <!-- TAB 1: DESPACHO RÁPIDO -->
+    <section id="view-deliver" class="space-y-6 max-w-6xl mx-auto">
+      
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <h2 class="text-2xl font-black text-white tracking-tight flex items-center gap-2">
+            <span>Despacho Rápido de Cuenta</span>
+            <span class="text-xs px-3 py-0.5 rounded-full bg-[#00f2fe]/20 text-[#00f2fe] border border-[#00f2fe]/30 font-bold">
+              Rotación P1...P5 Autocargada
+            </span>
+          </h2>
+          <p class="text-slate-400 text-sm">Selecciona modalidad. Solo ingresa el contacto del cliente y despacha al instante.</p>
+        </div>
+        
+        <!-- Modality Selector Pills -->
+        <div class="bg-[#121426] p-1.5 rounded-xl border border-[#1f223d] flex items-center space-x-1">
+          <button id="mod-toggle-express" onclick="setDeliveryModalityFilter('Express+')" class="px-4 py-2 rounded-lg text-xs font-black transition-all bg-gradient-to-r from-[#00f2fe] to-purple-600 text-white shadow-md">
+            🚀 Express+
+          </button>
+          <button id="mod-toggle-original" onclick="setDeliveryModalityFilter('Original')" class="px-4 py-2 rounded-lg text-xs font-black transition-all text-slate-400 hover:text-white">
+            ⭐ Original
+          </button>
+        </div>
+      </div>
+
+      <!-- Catalog Category Buttons -->
+      <div class="bg-[#121426] border border-[#1f223d] rounded-2xl p-4 space-y-3 shadow-lg">
+        <div class="flex items-center justify-between">
+          <span id="catalog-section-title" class="text-xs font-black text-[#00f2fe] uppercase tracking-wider block">
+            🚀 Opciones Disponibles en Modalidad Express+
+          </span>
+          <span class="text-[10px] text-slate-400 font-bold">Precios Oficiales COP</span>
+        </div>
+        <div class="flex flex-wrap gap-2" id="catalog-active-pills"></div>
+      </div>
+
+      <!-- Form + Live WhatsApp Preview -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        
+        <!-- Delivery Form (7 cols) -->
+        <div class="lg:col-span-7 bg-[#121426] border border-[#1f223d] rounded-2xl p-5 md:p-6 shadow-xl space-y-5">
+          
+          <!-- Round Robin Candidate Banner -->
+          <div id="rr-banner" class="bg-gradient-to-r from-purple-900/40 via-[#181a33] to-[#00f2fe]/10 border border-[#00f2fe]/30 rounded-xl p-3.5 flex items-center justify-between">
+            <div class="flex items-center space-x-3 text-xs">
+              <span class="w-8 h-8 rounded-lg bg-[#00f2fe]/20 text-[#00f2fe] flex items-center justify-center text-sm font-black shrink-0">
+                <i class="fa-solid fa-robot"></i>
+              </span>
+              <div>
+                <span class="text-slate-400 text-[11px] block">Asignación de turno por orden de compra:</span>
+                <span id="rr-next-assignment-text" class="font-bold text-white text-xs font-mono-code">Buscando cuenta madre disponible...</span>
+              </div>
+            </div>
+            <button type="button" onclick="updateNextProfileCandidate()" class="px-2.5 py-1.5 bg-[#00f2fe]/20 hover:bg-[#00f2fe]/30 text-[#00f2fe] text-[11px] font-bold rounded-lg border border-[#00f2fe]/40 transition-colors shrink-0">
+              <i class="fa-solid fa-arrows-rotate"></i> Recargar
+            </button>
+          </div>
+
+          <form id="delivery-form" onsubmit="handleExecuteFastDelivery(event)" class="space-y-4">
+            
+            <!-- Platform Dropdown & Details -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">
+                  Plataforma / Servicio <span class="text-[#ff007f]">*</span>
+                </label>
+                <select id="del-platform" onchange="onPlatformSelectChange()" class="w-full bg-[#080911] border border-[#1f223d] rounded-xl px-3.5 py-2.5 text-slate-100 text-xs font-bold focus:outline-none focus:border-[#00f2fe]">
+                </select>
+              </div>
+
+              <div>
+                <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">
+                  Etiqueta / Detalles Adicionales
+                </label>
+                <input type="text" id="del-detail" oninput="updateLivePreviewText()" placeholder="Ej: +40 días de acceso" class="w-full bg-[#080911] border border-[#1f223d] rounded-xl px-3.5 py-2.5 text-slate-100 text-xs focus:outline-none focus:border-[#00f2fe]">
+              </div>
+            </div>
+
+            <!-- MANDATORY USER INPUT: CLIENT / CONTACT -->
+            <div class="bg-gradient-to-r from-amber-500/10 to-transparent p-4 rounded-xl border border-amber-500/30 space-y-2">
+              <label class="block text-xs font-extrabold text-amber-400 uppercase tracking-wider">
+                Contacto del Cliente / Referencia <span class="text-[#ff007f]">*</span>
+              </label>
+              <div class="relative">
+                <i class="fa-solid fa-user-tag absolute left-3.5 top-3 text-amber-500 text-sm"></i>
+                <input type="text" id="del-client" required oninput="updateLivePreviewText()" placeholder="Ej: @AnaSofiaH.B o +57 313 7040897" class="w-full bg-[#080911] border border-amber-500/40 rounded-xl pl-10 pr-3.5 py-2.5 text-slate-100 font-bold text-sm focus:outline-none focus:border-amber-400">
+              </div>
+            </div>
+
+            <!-- Credentials Auto-Filled -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 p-3 bg-[#080911] rounded-xl border border-[#1f223d]">
+              <div class="sm:col-span-2">
+                <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Correo Asignado (Automático)</label>
+                <input type="text" id="del-email" readonly class="w-full bg-[#121426] border border-[#1f223d] rounded-lg px-3 py-1.5 text-slate-200 font-mono-code text-xs">
+              </div>
+              <div>
+                <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Perfil (Automático)</label>
+                <input type="text" id="del-profile" readonly class="w-full bg-[#121426] border border-[#1f223d] rounded-lg px-3 py-1.5 text-[#00f2fe] font-mono-code font-bold text-xs">
+              </div>
+            </div>
+
+            <!-- Pricing & Profit (In COP) -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">
+                  Precio de Venta ($ COP)
+                </label>
+                <div class="relative">
+                  <span class="absolute left-3 top-2.5 text-slate-500 font-bold">$</span>
+                  <input type="number" step="100" min="0" id="del-price" required oninput="updateLiveProfit()" placeholder="12000" class="w-full bg-[#080911] border border-[#1f223d] rounded-xl pl-7 pr-3 py-2.5 text-slate-100 font-bold text-sm focus:outline-none focus:border-[#00f2fe]">
+                </div>
+              </div>
+
+              <div>
+                <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">
+                  Costo por Perfil ($ COP)
+                </label>
+                <div class="relative">
+                  <span class="absolute left-3 top-2.5 text-slate-500 font-bold">$</span>
+                  <input type="number" step="100" min="0" id="del-cost" oninput="updateLiveProfit()" placeholder="8400" class="w-full bg-[#080911] border border-[#1f223d] rounded-xl pl-7 pr-3 py-2.5 text-slate-100 font-bold text-sm focus:outline-none focus:border-[#00f2fe]">
+                </div>
+              </div>
+            </div>
+
+            <!-- Live Profit Calculation Display -->
+            <div class="bg-[#080911] border border-[#1f223d] rounded-xl p-3 flex items-center justify-between">
+              <div>
+                <span class="text-xs text-slate-400 font-bold uppercase tracking-wider block">Ganancia Neta Calculada:</span>
+                <span id="del-margin-badge" class="text-[10px] text-purple-400 font-bold">Margen: 0%</span>
+              </div>
+              <span id="del-profit-badge" class="text-xl font-black text-emerald-400">$ 0 COP</span>
+            </div>
+
+            <!-- Action Submit -->
+            <button type="submit" id="btn-dispatch-submit" class="w-full py-4 px-5 bg-gradient-to-r from-[#00f2fe] via-purple-600 to-[#ff007f] hover:opacity-95 text-white font-black text-base rounded-xl transition-all shadow-lg shadow-purple-900/40 flex items-center justify-center space-x-2">
+              <i class="fa-solid fa-paper-plane text-xl"></i>
+              <span>🚀 Despachar y Copiar Mensaje WhatsApp</span>
+            </button>
+          </form>
+        </div>
+
+        <!-- WhatsApp Preview Column (5 cols) -->
+        <div class="lg:col-span-5 space-y-4">
+          <div class="bg-[#121426] border border-[#1f223d] rounded-2xl overflow-hidden shadow-xl flex flex-col h-full">
+            
+            <div class="bg-[#181a33] px-4 py-3 flex items-center justify-between border-b border-[#1f223d]">
+              <div class="flex items-center space-x-2.5">
+                <div class="w-8 h-8 rounded-full bg-whatsapp-500 flex items-center justify-center text-white text-base font-bold shadow-md">
+                  <i class="fa-brands fa-whatsapp"></i>
+                </div>
+                <div>
+                  <h3 class="text-xs font-bold text-white leading-tight">Plantilla Oficial WhatsApp</h3>
+                  <span class="text-[10px] text-[#00f2fe] block font-semibold">Andrade's STREAMING</span>
+                </div>
+              </div>
+              <span class="text-[10px] font-mono-code text-slate-400" id="preview-time-badge">12:00</span>
+            </div>
+
+            <!-- WhatsApp Message Box -->
+            <div class="p-4 chat-bg flex-1 flex flex-col justify-center">
+              <div class="bg-[#1f2c34] text-slate-100 rounded-2xl rounded-tl-none p-4 text-xs sm:text-sm font-mono-code leading-relaxed shadow-lg border border-slate-700/50 space-y-2 relative">
+                
+                <div id="deliver-preview-text" class="whitespace-pre-wrap select-all">🛒 Servicio: Netflix Original 4K - 
+
+✉️ Detalles: Correo: userbpink@shaivitespro.com
+Acceso: pass272829
+Perfil: P1
+
+📦 Referencia: Cliente Ejemplo
+
+🙏 ¡Gracias por tu compra en Andrade's STREAMING! Estamos aquí para cualquier consulta.</div>
+
+                <div class="text-[10px] text-slate-400 text-right pt-1 flex items-center justify-end space-x-1">
+                  <span>Formato Generado</span>
+                  <i class="fa-solid fa-check-double text-sky-400"></i>
+                </div>
+              </div>
+            </div>
+
+            <!-- Copy Action Footer -->
+            <div class="p-4 bg-[#121426] border-t border-[#1f223d]">
+              <button type="button" onclick="copyDeliveryTextDirect()" class="w-full py-3 px-4 bg-whatsapp-600 hover:bg-whatsapp-500 text-white font-black text-sm rounded-xl transition-all shadow-lg shadow-whatsapp-900/40 flex items-center justify-center space-x-2">
+                <i class="fa-regular fa-copy text-lg"></i>
+                <span>Copiar Mensaje al Portapapeles</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- TAB 2: MATRIZ EXCEL EXPRESS+ (EXACT REPLICATION OF SPREADSHEET PHOTO & DATABASE) -->
+    <section id="view-express-matrix" class="hidden space-y-6 max-w-7xl mx-auto">
+      
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <h2 class="text-2xl font-black text-white tracking-tight flex items-center gap-2">
+            <i class="fa-solid fa-file-excel text-emerald-400"></i>
+            <span>Matriz Excel Express+ (Vista Hoja de Cálculo Pre-cargada)</span>
+          </h2>
+          <p class="text-slate-400 text-sm">Organización oficial desglosada por plataforma, correo, perfil, fecha de entrega y comprador.</p>
+        </div>
+
+        <div class="flex items-center space-x-2">
+          <button onclick="exportSalesCSV()" class="px-4 py-2.5 bg-[#121426] border border-[#1f223d] hover:bg-[#181a33] text-emerald-400 rounded-xl text-xs font-bold transition-all flex items-center space-x-2">
+            <i class="fa-solid fa-download"></i>
+            <span>Descargar CSV Excel</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Platform Selection Sub-Tabs for Matrix -->
+      <div class="bg-[#121426] border border-[#1f223d] rounded-2xl p-4 flex flex-wrap gap-2" id="matrix-platform-pills">
+        <button onclick="filterMatrixPlatform('all')" id="matrix-pill-all" class="px-4 py-2 rounded-xl text-xs font-black bg-[#00f2fe] text-slate-950 shadow-md">
+          Todas las Plataformas Express+
+        </button>
+        <button onclick="filterMatrixPlatform('Prime Video (Express+)')" id="matrix-pill-prime" class="px-4 py-2 rounded-xl text-xs font-bold bg-[#181a33] text-slate-300 hover:text-white border border-[#1f223d]">
+          Prime Video
+        </button>
+        <button onclick="filterMatrixPlatform('Netflix 4K UHD (Express+)')" id="matrix-pill-netflix" class="px-4 py-2 rounded-xl text-xs font-bold bg-[#181a33] text-slate-300 hover:text-white border border-[#1f223d]">
+          Netflix 4K UHD
+        </button>
+        <button onclick="filterMatrixPlatform('Disney+ Premium + 7 ESPN (Express+)')" id="matrix-pill-disney" class="px-4 py-2 rounded-xl text-xs font-bold bg-[#181a33] text-slate-300 hover:text-white border border-[#1f223d]">
+          Disney+ Premium
+        </button>
+        <button onclick="filterMatrixPlatform('HBO Max Platino (Express+)')" id="matrix-pill-hbo" class="px-4 py-2 rounded-xl text-xs font-bold bg-[#181a33] text-slate-300 hover:text-white border border-[#1f223d]">
+          Max (HBO)
+        </button>
+      </div>
+
+      <!-- Live Filter Bar -->
+      <div class="bg-[#121426] border border-[#1f223d] rounded-2xl p-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div class="relative w-full sm:w-80">
+          <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3 text-slate-500 text-xs"></i>
+          <input type="text" id="matrix-search-input" oninput="renderExpressMatrixGrid()" placeholder="Buscar correo, perfil o cliente..." class="w-full bg-[#080911] border border-[#1f223d] rounded-xl pl-9 pr-4 py-2 text-slate-100 text-xs focus:outline-none focus:border-[#00f2fe]">
+        </div>
+        <div class="text-xs font-mono-code text-slate-400">
+          Mostrando matriz ordenada por <span class="text-[#00f2fe] font-bold"># Cuenta & Perfil</span>
+        </div>
+      </div>
+
+      <!-- Excel Matrix Container -->
+      <div class="bg-[#121426] border border-[#1f223d] rounded-2xl overflow-hidden shadow-2xl">
+        <div class="overflow-x-auto">
+          <table class="w-full text-left excel-table">
+            <thead>
+              <tr>
+                <th class="py-3 px-3 text-center w-16"># Cta</th>
+                <th class="py-3 px-4">Plataforma</th>
+                <th class="py-3 px-6">Cuenta (Correo Electrónico)</th>
+                <th class="py-3 px-3 text-center w-20">Perfil</th>
+                <th class="py-3 px-4 w-36">Fecha Entrega</th>
+                <th class="py-3 px-6">Contacto / Cliente Comprador</th>
+                <th class="py-3 px-3 text-center w-28">Estado</th>
+                <th class="py-3 px-3 text-center w-20">Acción</th>
+              </tr>
+            </thead>
+            <tbody id="express-matrix-body" class="font-mono-code text-xs">
+              <!-- JS rendered rows mimicking Excel photo -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </section>
+
+
+    <!-- TAB 3: SECCIÓN MODALIDAD ORIGINAL ⭐ -->
+    <section id="view-original-section" class="hidden space-y-6 max-w-7xl mx-auto">
+      
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <h2 class="text-2xl font-black text-white tracking-tight flex items-center gap-2">
+            <i class="fa-solid fa-star text-amber-400"></i>
+            <span>Sección Modalidad Original ⭐ (30 Días Completos)</span>
+          </h2>
+          <p class="text-slate-400 text-sm">Gestión independiente de servicios de cuenta personal y privada.</p>
+        </div>
+
+        <button onclick="setDeliveryModalityFilter('Original'); switchTab('deliver');" class="px-4 py-2.5 bg-gradient-to-r from-amber-500 to-orange-600 text-white rounded-xl text-xs font-extrabold shadow-md flex items-center space-x-2">
+          <i class="fa-solid fa-plus"></i>
+          <span>Despachar Cuenta Original</span>
+        </button>
+      </div>
+
+      <!-- Original Cards Overview -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4" id="original-catalog-cards">
+        <!-- JS rendered -->
+      </div>
+
+      <!-- Original Sales History Table -->
+      <div class="bg-[#121426] border border-[#1f223d] rounded-2xl p-5 space-y-4">
+        <h3 class="font-extrabold text-white text-base flex items-center gap-2">
+          <i class="fa-solid fa-clock-rotate-left text-amber-400"></i>
+          <span>Registro de Entregas Modalidad Original</span>
+        </h3>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs text-slate-300">
+            <thead class="uppercase bg-[#080911] text-slate-400 border-b border-[#1f223d]">
+              <tr>
+                <th class="py-3 px-4">Fecha</th>
+                <th class="py-3 px-4">Plataforma</th>
+                <th class="py-3 px-4">Correo Asignado</th>
+                <th class="py-3 px-4">Contacto Cliente</th>
+                <th class="py-3 px-4 text-right">Venta</th>
+                <th class="py-3 px-4 text-right">Ganancia</th>
+                <th class="py-3 px-4 text-center">Mensaje</th>
+              </tr>
+            </thead>
+            <tbody id="original-sales-body" class="divide-y divide-[#1f223d] font-mono-code">
+              <!-- JS rendered -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- TAB 4: INVENTARIO DE CUENTAS MADRE -->
+    <section id="view-inventory" class="hidden space-y-6 max-w-7xl mx-auto">
+      
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <h2 class="text-2xl font-black text-white tracking-tight">Inventario de Cuentas Madre</h2>
+          <p class="text-slate-400 text-sm">Carga lista masiva y administra ranuras de perfiles (P1...P5 / P7).</p>
+        </div>
+        <div class="flex items-center space-x-2">
+          <button onclick="openBulkModal()" class="px-4 py-2.5 bg-gradient-to-r from-[#00f2fe] to-[#ff007f] text-white rounded-xl text-xs font-extrabold shadow-md flex items-center space-x-2">
+            <i class="fa-solid fa-file-import"></i>
+            <span>+ Cargar Lista de Cuentas</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Filter Pills -->
+      <div class="bg-[#121426] border border-[#1f223d] rounded-2xl p-4 flex flex-wrap gap-2" id="inventory-platform-filters">
+        <!-- JS rendered -->
+      </div>
+
+      <!-- Accounts Container -->
+      <div id="inventory-accounts-container" class="space-y-4">
+        <!-- JS rendered -->
+      </div>
+    </section>
+
+
+    <!-- TAB 5: PANEL DE FINANZAS Y GANANCIAS COMBINADAS -->
+    <section id="view-dashboard" class="hidden space-y-6 max-w-7xl mx-auto">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <h2 class="text-2xl font-black text-white tracking-tight">Panel de Ganancias & Métricas Combinadas</h2>
+          <p class="text-slate-400 text-sm">Resumen global consolidado de Express+ 🚀 y Original ⭐ en Pesos Colombianos (COP).</p>
+        </div>
+        <select id="dashboard-period" onchange="renderDashboardMetrics()" class="bg-[#121426] border border-[#1f223d] text-slate-200 text-xs font-semibold rounded-xl px-3.5 py-2.5 focus:outline-none focus:border-[#00f2fe]">
+          <option value="month" selected>Este Mes</option>
+          <option value="week">Esta Semana</option>
+          <option value="today">Hoy</option>
+          <option value="all">Histórico Total</option>
+        </select>
+      </div>
+
+      <!-- Metrics Cards -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        
+        <div class="bg-[#121426] border border-[#1f223d] rounded-2xl p-5 relative overflow-hidden shadow-lg">
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold uppercase tracking-wider text-emerald-400">Ganancia Neta Combinada</span>
+            <span class="w-9 h-9 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-base">
+              <i class="fa-solid fa-sack-dollar"></i>
+            </span>
+          </div>
+          <h3 id="dash-metric-profit" class="text-2xl font-black text-white tracking-tight">$ 0 COP</h3>
+          <p id="dash-metric-margin" class="text-xs text-slate-400 mt-2">Margen General: 0%</p>
+        </div>
+
+        <div class="bg-[#121426] border border-[#1f223d] rounded-2xl p-5 relative overflow-hidden shadow-lg">
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold uppercase tracking-wider text-[#00f2fe]">Ganancia Express+ 🚀</span>
+            <span class="w-9 h-9 rounded-xl bg-[#00f2fe]/10 text-[#00f2fe] flex items-center justify-center text-base">
+              <i class="fa-solid fa-rocket"></i>
+            </span>
+          </div>
+          <h3 id="dash-metric-express-profit" class="text-2xl font-black text-[#00f2fe] tracking-tight">$ 0 COP</h3>
+          <p id="dash-metric-express-count" class="text-xs text-slate-400 mt-2">0 entregas Express+</p>
+        </div>
+
+        <div class="bg-[#121426] border border-[#1f223d] rounded-2xl p-5 relative overflow-hidden shadow-lg">
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold uppercase tracking-wider text-amber-400">Ganancia Original ⭐</span>
+            <span class="w-9 h-9 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center text-base">
+              <i class="fa-solid fa-star"></i>
+            </span>
+          </div>
+          <h3 id="dash-metric-original-profit" class="text-2xl font-black text-amber-300 tracking-tight">$ 0 COP</h3>
+          <p id="dash-metric-original-count" class="text-xs text-slate-400 mt-2">0 entregas Originales</p>
+        </div>
+
+        <div class="bg-[#121426] border border-[#1f223d] rounded-2xl p-5 relative overflow-hidden shadow-lg">
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold uppercase tracking-wider text-[#ff007f]">Inversión Total</span>
+            <span class="w-9 h-9 rounded-xl bg-[#ff007f]/10 text-[#ff007f] flex items-center justify-center text-base">
+              <i class="fa-solid fa-receipt"></i>
+            </span>
+          </div>
+          <h3 id="dash-metric-cost" class="text-2xl font-black text-white tracking-tight">$ 0 COP</h3>
+          <p class="text-xs text-slate-400 mt-2">Costo total de cuentas</p>
+        </div>
+
+      </div>
+
+      <!-- Financial Chart -->
+      <div class="bg-[#121426] border border-[#1f223d] rounded-2xl p-5">
+        <h3 class="font-extrabold text-white text-base mb-4 flex items-center gap-2">
+          <i class="fa-solid fa-chart-area text-[#00f2fe]"></i>
+          <span>Ganancia Neta Desglosada por Plataforma ($ COP)</span>
+        </h3>
+        <div class="relative h-72">
+          <canvas id="chart-dashboard-trend"></canvas>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- MOBILE BOTTOM NAVBAR -->
+  <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-[#0c0d1a]/95 backdrop-blur-md border-t border-[#1f223d] py-2 px-3 flex justify-around items-center z-40">
+    <button onclick="switchTab('deliver')" id="nav-mobile-deliver" class="nav-btn-mobile flex flex-col items-center text-slate-400 hover:text-[#00f2fe]">
+      <i class="fa-solid fa-bolt-lightning text-lg"></i>
+      <span class="text-[9px] mt-1 font-semibold">Despacho</span>
+    </button>
+
+    <button onclick="switchTab('express-matrix')" id="nav-mobile-express-matrix" class="nav-btn-mobile flex flex-col items-center text-slate-400 hover:text-[#00f2fe]">
+      <i class="fa-solid fa-table-cells text-lg"></i>
+      <span class="text-[9px] mt-1 font-semibold">Matriz</span>
+    </button>
+
+    <button onclick="openBulkModal()" class="flex flex-col items-center justify-center w-11 h-11 rounded-full bg-gradient-to-tr from-[#00f2fe] to-[#ff007f] text-white shadow-lg shadow-purple-900/60 -mt-4">
+      <i class="fa-solid fa-plus text-lg"></i>
+    </button>
+
+    <button onclick="switchTab('original-section')" id="nav-mobile-original-section" class="nav-btn-mobile flex flex-col items-center text-slate-400 hover:text-[#00f2fe]">
+      <i class="fa-solid fa-star text-lg"></i>
+      <span class="text-[9px] mt-1 font-semibold">Original</span>
+    </button>
+
+    <button onclick="switchTab('dashboard')" id="nav-mobile-dashboard" class="nav-btn-mobile flex flex-col items-center text-slate-400 hover:text-[#00f2fe]">
+      <i class="fa-solid fa-chart-line text-lg"></i>
+      <span class="text-[9px] mt-1 font-semibold">Finanzas</span>
+    </button>
+  </nav>
+
+  <!-- MODAL: CARGA MASIVA DE CUENTAS MADRE -->
+  <div id="modal-bulk" class="hidden fixed inset-0 z-50 bg-[#080911]/85 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-[#121426] border border-[#1f223d] rounded-2xl max-w-xl w-full p-6 shadow-2xl relative space-y-4">
+      <button onclick="closeBulkModal()" class="absolute right-4 top-4 text-slate-400 hover:text-white">
+        <i class="fa-solid fa-xmark text-lg"></i>
+      </button>
+
+      <div>
+        <h3 class="text-lg font-black text-white flex items-center gap-2">
+          <i class="fa-solid fa-file-import text-[#00f2fe]"></i>
+          <span>Cargar Cuentas Madre al Inventario</span>
+        </h3>
+        <p class="text-xs text-slate-400 mt-1">
+          Pega los accesos comprados para asignarlos en la rotación automática (P1, P2...).
+        </p>
+      </div>
+
+      <div class="space-y-3">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1">Plataforma</label>
+            <select id="bulk-platform" onchange="updateBulkMaxProfilesDefault()" class="w-full bg-[#080911] border border-[#1f223d] rounded-xl px-3 py-2 text-slate-100 text-xs focus:outline-none focus:border-[#00f2fe]">
+              <!-- JS Catalog options -->
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1">Perfiles por Cuenta</label>
+            <input type="number" min="1" max="10" id="bulk-max-profiles" value="5" class="w-full bg-[#080911] border border-[#1f223d] rounded-xl px-3 py-2 text-slate-100 text-xs font-bold focus:outline-none focus:border-[#00f2fe]">
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1">
+            Lista de Cuentas (Correo y Contraseña):
+          </label>
+          <textarea id="bulk-input-text" rows="6" placeholder="paytennardleo+bg6@gmail.com pass272829
+pilovvlad4+htx@gmail.com pass272829
+potero09n@gmail.com:pass272829" class="w-full bg-[#080911] border border-[#1f223d] rounded-xl p-3 text-slate-100 font-mono-code text-xs focus:outline-none focus:border-[#00f2fe]"></textarea>
+          <span class="text-[10px] text-slate-400 mt-1 block">El sistema creará las ranuras P1...P5/P7 en estado LIBRE.</span>
+        </div>
+      </div>
+
+      <div class="pt-3 border-t border-[#1f223d] flex justify-end space-x-3">
+        <button onclick="closeBulkModal()" class="px-4 py-2 bg-[#181a33] text-slate-300 text-xs font-semibold rounded-xl">Cancelar</button>
+        <button onclick="processBulkAccountsImport()" class="px-5 py-2 bg-gradient-to-r from-[#00f2fe] to-[#ff007f] text-white text-xs font-extrabold rounded-xl shadow-lg">
+          Guardar en Inventario
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: EDITAR CREDENCIALES DE CUENTA MADRE POR CAÍDA -->
+  <div id="modal-edit-account" class="hidden fixed inset-0 z-50 bg-[#080911]/85 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-[#121426] border border-[#1f223d] rounded-2xl max-w-md w-full p-6 shadow-2xl relative space-y-4">
+      <button onclick="closeEditAccountModal()" class="absolute right-4 top-4 text-slate-400 hover:text-white">
+        <i class="fa-solid fa-xmark text-lg"></i>
+      </button>
+
+      <div>
+        <h3 class="text-lg font-black text-white flex items-center gap-2">
+          <i class="fa-solid fa-pen-to-square text-[#00f2fe]"></i>
+          <span>Editar Credenciales por Caída</span>
+        </h3>
+        <p class="text-xs text-slate-400 mt-1">
+          Actualiza el correo y contraseña de la cuenta madre. Mantendrá todos los perfiles vendidos (P1...P5), clientes asignados y fechas intactas.
+        </p>
+      </div>
+
+      <input type="hidden" id="edit-acc-id">
+
+      <div class="space-y-3">
+        <div>
+          <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1">Nuevo Correo Electrónico</label>
+          <input type="email" id="edit-acc-email" required class="w-full bg-[#080911] border border-[#1f223d] rounded-xl px-3.5 py-2.5 text-slate-100 font-mono-code text-xs focus:outline-none focus:border-[#00f2fe]">
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1">Nueva Contraseña de Acceso</label>
+          <input type="text" id="edit-acc-password" required class="w-full bg-[#080911] border border-[#1f223d] rounded-xl px-3.5 py-2.5 text-slate-100 font-mono-code text-xs focus:outline-none focus:border-[#00f2fe]">
+        </div>
+      </div>
+
+      <div class="pt-3 border-t border-[#1f223d] flex justify-end space-x-3">
+        <button onclick="closeEditAccountModal()" class="px-4 py-2 bg-[#181a33] text-slate-300 text-xs font-semibold rounded-xl">Cancelar</button>
+        <button onclick="saveAccountCredentials()" class="px-5 py-2 bg-gradient-to-r from-[#00f2fe] to-[#ff007f] text-white text-xs font-extrabold rounded-xl shadow-lg flex items-center space-x-2">
+          <i class="fa-solid fa-floppy-disk"></i>
+          <span>Guardar Cambios</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST CONTAINER -->
+  <div id="toast-container" class="fixed top-4 right-4 z-50 space-y-2 pointer-events-none"></div>
+
+  <!-- APPLICATION LOGIC -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+    import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+    import { getFirestore, collection, onSnapshot, addDoc, updateDoc, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+    // OFFICIAL CATALOG CONFIGURATION WITH COP PRICES
+    window.CATALOG_CATALOG = {
+      // 🚀 EXPRESS+ (+40 DÍAS DE ACCESO)
+      'Prime Video (Express+)': {
+        category: 'Express+',
+        name: 'Prime Video',
+        detail: '(Express+ +40 días)',
+        price: 4000,
+        cost: 1800,
+        maxProfiles: 6,
+        color: '#00A8E1',
+        icon: 'fa-circle-play',
+        badge: 'bg-sky-500/20 text-sky-400 border-sky-500/30'
+      },
+      'Netflix 4K UHD (Express+)': {
+        category: 'Express+',
+        name: 'Netflix 4K UHD',
+        detail: '(Express+ +40 días)',
+        price: 12000,
+        cost: 8400,
+        maxProfiles: 5,
+        color: '#E50914',
+        icon: 'fa-film',
+        badge: 'bg-red-500/20 text-red-400 border-red-500/30'
+      },
+      'Disney+ Premium + 7 ESPN (Express+)': {
+        category: 'Express+',
+        name: 'Disney+ Premium + 7 ESPN',
+        detail: '(Express+ +40 días)',
+        price: 8000,
+        cost: 4285,
+        maxProfiles: 7,
+        color: '#113CCF',
+        icon: 'fa-sparkles',
+        badge: 'bg-blue-500/20 text-blue-400 border-blue-500/30'
+      },
+      'HBO Max Platino (Express+)': {
+        category: 'Express+',
+        name: 'HBO Max Platino',
+        detail: '(Express+ +40 días)',
+        price: 5000,
+        cost: 2400,
+        maxProfiles: 5,
+        color: '#002BE7',
+        icon: 'fa-tv',
+        badge: 'bg-purple-500/20 text-purple-400 border-purple-500/30'
+      },
+
+      // ⭐ ORIGINAL (30 DÍAS COMPLETOS)
+      'Disney+ Premium (4 ESPN)': {
+        category: 'Original',
+        name: 'Disney+ Premium (4 ESPN)',
+        detail: '(Original 30 días)',
+        price: 8000,
+        cost: 4000,
+        maxProfiles: 7,
+        color: '#0066FF',
+        icon: 'fa-star',
+        badge: 'bg-indigo-500/20 text-indigo-400 border-indigo-500/30'
+      },
+      'Disney+ Estándar (7 ESPN c/anuncios)': {
+        category: 'Original',
+        name: 'Disney+ Estándar (7 ESPN anuncios)',
+        detail: '(Original 30 días)',
+        price: 6600,
+        cost: 3300,
+        maxProfiles: 7,
+        color: '#0044CC',
+        icon: 'fa-tv',
+        badge: 'bg-blue-600/20 text-blue-300 border-blue-600/30'
+      },
+      'ViX+ Original': {
+        category: 'Original',
+        name: 'ViX+ Original',
+        detail: '(Original 30 días)',
+        price: 4000,
+        cost: 2000,
+        maxProfiles: 5,
+        color: '#FF5500',
+        icon: 'fa-play',
+        badge: 'bg-orange-500/20 text-orange-400 border-orange-500/30'
+      },
+      'Crunchyroll Original': {
+        category: 'Original',
+        name: 'Crunchyroll Original',
+        detail: '(Original 30 días)',
+        price: 6000,
+        cost: 3000,
+        maxProfiles: 5,
+        color: '#F47521',
+        icon: 'fa-clapperboard',
+        badge: 'bg-amber-500/20 text-amber-400 border-amber-500/30'
+      },
+      'Spotify Premium (1 Mes)': {
+        category: 'Original',
+        name: 'Spotify Premium (1 Mes)',
+        detail: '(Cuenta Personal)',
+        price: 10000,
+        cost: 7000,
+        maxProfiles: 1,
+        color: '#1DB954',
+        icon: 'fa-music',
+        badge: 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30'
+      },
+      'Spotify Premium (3 Meses)': {
+        category: 'Original',
+        name: 'Spotify Premium (3 Meses)',
+        detail: '(Cuenta Personal 3 Meses)',
+        price: 25000,
+        cost: 19000,
+        maxProfiles: 1,
+        color: '#1AA34A',
+        icon: 'fa-compact-disc',
+        badge: 'bg-emerald-600/20 text-emerald-300 border-emerald-600/30'
+      },
+      'Claude Pro (Cuenta Privada)': {
+        category: 'Original',
+        name: 'Claude Pro (Privada)',
+        detail: '(30 días completos)',
+        price: 30000,
+        cost: 25000,
+        maxProfiles: 1,
+        color: '#D97706',
+        icon: 'fa-brain',
+        badge: 'bg-amber-600/20 text-amber-300 border-amber-600/30'
+      }
+    };
+
+    // Global State
+    window.state = {
+      accounts: [],
+      sales: [],
+      user: null,
+      activeTab: 'deliver',
+      activeModalityFilter: 'Express+',
+      matrixPlatformFilter: 'all',
+      inventoryFilter: 'all',
+      nextCandidate: null
+    };
+
+    let dashboardChart = null;
+
+    // Firebase Init
+    const appId = typeof __app_id !== 'undefined' ? __app_id : 'andrades-streaming-crm-v4';
+    const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : null;
+    const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+    let db = null;
+
+    async function initSystem() {
+      if (!firebaseConfig) {
+        loadLocalStorageData();
+        return;
+      }
+
+      try {
+        const app = initializeApp(firebaseConfig);
+        db = getFirestore(app);
+        const auth = getAuth(app);
+
+        if (initialAuthToken) {
+          await signInWithCustomToken(auth, initialAuthToken);
+        } else {
+          await signInAnonymously(auth);
+        }
+
+        onAuthStateChanged(auth, (user) => {
+          if (user) {
+            window.state.user = user;
+            setupRealtimeListeners(user.uid);
+          } else {
+            signInAnonymously(auth);
+          }
+        });
+      } catch (err) {
+        console.error("Firebase fallback to LocalStorage:", err);
+        loadLocalStorageData();
+      }
+    }
+
+    function setupRealtimeListeners(userId) {
+      if (!db || !userId) return;
+
+      onSnapshot(collection(db, 'artifacts', appId, 'users', userId, 'accounts'), (snap) => {
+        window.state.accounts = [];
+        snap.forEach(d => window.state.accounts.push({ id: d.id, ...d.data() }));
+        
+        if (window.state.accounts.length === 0 && window.state.sales.length === 0) {
+          seedInitialAccounts(userId);
+        } else {
+          renderCurrentView();
+          updateSidebarStock();
+        }
+      }, (err) => console.error("Err accounts:", err));
+
+      onSnapshot(collection(db, 'artifacts', appId, 'users', userId, 'sales'), (snap) => {
+        window.state.sales = [];
+        snap.forEach(d => window.state.sales.push({ id: d.id, ...d.data() }));
+        window.state.sales.sort((a, b) => (b.orderNum || 0) - (a.orderNum || 0));
+        renderCurrentView();
+        updateSidebarStock();
+      }, (err) => console.error("Err sales:", err));
+    }
+
+    // PRE-LOAD COMPLETE DATABASE FROM USER SPREADSHEET PHOTO AND TEXT
+    async function seedInitialAccounts(userId) {
+      const sampleAccounts = [
+        // PRIME VIDEO (EXPRESS+)
+        { platform: 'Prime Video (Express+)', category: 'Express+', email: 'pedrobenitez2537@bigstoreoficial.com', password: 'pass272829', maxProfiles: 6, soldProfiles: [
+          { profileNum: 4, client: '323 2925963', date: '11/10/2026' },
+          { profileNum: 5, client: '@aide_sam2404', date: '11/10/2026' },
+          { profileNum: 6, client: '@4ndysJ', date: '11/10/2026' }
+        ]},
+        { platform: 'Prime Video (Express+)', category: 'Express+', email: 'pedrogomez30@bigstoreoficial.com', password: 'pass272829', maxProfiles: 6, soldProfiles: [
+          { profileNum: 4, client: '+57 324 3701440', date: '17/10/2026' },
+          { profileNum: 5, client: '302 7481964', date: '17/10/2026' },
+          { profileNum: 6, client: '52 1 461 131 7390', date: '17/10/2026' }
+        ]},
+        { platform: 'Prime Video (Express+)', category: 'Express+', email: 'robertozuniga5162@bigstoreoficial.com', password: 'pass272829', maxProfiles: 6, soldProfiles: [
+          { profileNum: 1, client: '+52 461 379 2503', date: '5/11/2026' },
+          { profileNum: 2, client: '@josemedicis', date: '1/11/2026' },
+          { profileNum: 3, client: '+57 321 7370745', date: '1/11/2026' },
+          { profileNum: 4, client: '@juang_momp', date: '1/11/2026' }
+        ]},
+        { platform: 'Prime Video (Express+)', category: 'Express+', email: 'pinzonhenrique9+xxcv@gmail.com', password: 'pass272829', maxProfiles: 6, soldProfiles: [
+          { profileNum: 1, client: '@alejandro.acker', date: '20/10/2026' },
+          { profileNum: 2, client: '@Carsolarte1', date: '1/11/2026' },
+          { profileNum: 3, client: '+57 314 5524293', date: '1/11/2026' }
+        ]},
+
+        // NETFLIX 4K UHD (EXPRESS+)
+        { platform: 'Netflix 4K UHD (Express+)', category: 'Express+', email: 'BishopKahnh@kngshopp.com', password: 'pass272829', maxProfiles: 5, soldProfiles: [
+          { profileNum: 2, client: '@AnaSofiaH.B', date: '15/10/2026' },
+          { profileNum: 3, client: '+57 310 5451374', date: '17/10/2026' },
+          { profileNum: 4, client: '+57 312 6987488', date: '20/10/2026' },
+          { profileNum: 5, client: '@ingrid_melen', date: '20/10/2026' }
+        ]},
+        { platform: 'Netflix 4K UHD (Express+)', category: 'Express+', email: 'emsad30e.ruben@kngshopp.com', password: 'pass272829', maxProfiles: 5, soldProfiles: [
+          { profileNum: 3, client: '313 7040897', date: '15/10/2026' },
+          { profileNum: 4, client: '@_alennx__', date: '17/10/2026' },
+          { profileNum: 5, client: '+57 318 2702766', date: '20/10/2026' }
+        ]},
+        { platform: 'Netflix 4K UHD (Express+)', category: 'Express+', email: 'Williamsliliana7208@hotmail.com', password: 'pass272829', maxProfiles: 5, soldProfiles: [
+          { profileNum: 3, client: '@juliana_guzman876', date: '15/10/2026' },
+          { profileNum: 4, client: '310 8484834', date: '19/10/2026' },
+          { profileNum: 5, client: '+52 461 112 1891', date: '20/10/2026' }
+        ]},
+        { platform: 'Netflix 4K UHD (Express+)', category: 'Express+', email: 'tosyalby+6@gmail.com', password: 'pass272829', maxProfiles: 5, soldProfiles: [
+          { profileNum: 3, client: '+57 302 3534702', date: '17/10/2026' },
+          { profileNum: 4, client: '57 310 7742530', date: '19/10/2026' },
+          { profileNum: 5, client: '+57 302 4101248', date: '20/10/2026' }
+        ]},
+        { platform: 'Netflix 4K UHD (Express+)', category: 'Express+', email: 'roberto.carlos.hernandez9@outlook.com', password: 'pass272829', maxProfiles: 5, soldProfiles: [
+          { profileNum: 3, client: '322 7882451', date: '17/10/2026' },
+          { profileNum: 4, client: '@n_vn_y', date: '20/10/2026' }
+        ]},
+        { platform: 'Netflix 4K UHD (Express+)', category: 'Express+', email: 'paytennardleo+bg6@gmail.com', password: 'pass272829', maxProfiles: 5, soldProfiles: [
+          { profileNum: 1, client: '323 4153297', date: '21/10/2026' },
+          { profileNum: 2, client: '310 5310994', date: '23/10/2026' },
+          { profileNum: 3, client: '+52 461 401 2219', date: '25/10/2026' },
+          { profileNum: 4, client: '@JohnJairoDo', date: '4/11/2026' },
+          { profileNum: 5, client: '+57 316 1321520', date: '4/11/2026' }
+        ]},
+        { platform: 'Netflix 4K UHD (Express+)', category: 'Express+', email: 'pilovvlad4+htx@gmail.com', password: 'pass272829', maxProfiles: 5, soldProfiles: [
+          { profileNum: 1, client: '+57 323 9355014', date: '22/10/2026' },
+          { profileNum: 2, client: '+57 312 4308715', date: '24/10/2026' },
+          { profileNum: 3, client: '+57 300 5193429', date: '25/10/2026' },
+          { profileNum: 4, client: '@sergio_bravo31', date: '4/11/2026' },
+          { profileNum: 5, client: '@juang_momp', date: '4/11/2026' }
+        ]},
+        { platform: 'Netflix 4K UHD (Express+)', category: 'Express+', email: 'potero09n@gmail.com', password: 'pass272829', maxProfiles: 5, soldProfiles: [
+          { profileNum: 1, client: '+57 323 9355014', date: '22/10/2026' },
+          { profileNum: 2, client: '+57 318 7234200', date: '24/10/2026' },
+          { profileNum: 3, client: '@juless_ce', date: '25/10/2026' },
+          { profileNum: 4, client: '+57 313 6039203', date: '4/11/2026' },
+          { profileNum: 5, client: '57 318 3444815', date: '4/11/2026' }
+        ]},
+        { platform: 'Netflix 4K UHD (Express+)', category: 'Express+', email: 'pablo938smith@gmail.com', password: 'pass272829', maxProfiles: 5, soldProfiles: [
+          { profileNum: 1, client: '@jeisonn_ortega', date: '23/10/2026' },
+          { profileNum: 2, client: '@dayade684', date: '24/10/2026' },
+          { profileNum: 3, client: '@zyceronr_047', date: '26/10/2026' },
+          { profileNum: 4, client: '@juancamilosot', date: '4/11/2026' },
+          { profileNum: 5, client: '57 318 7728204', date: '4/11/2026' }
+        ]},
+        { platform: 'Netflix 4K UHD (Express+)', category: 'Express+', email: 'pearcyq+x@gmail.com', password: 'pass272829', maxProfiles: 5, soldProfiles: [
+          { profileNum: 1, client: '@bolanos242', date: '23/10/2026' },
+          { profileNum: 2, client: '+57 322 5270586', date: '25/10/2026' },
+          { profileNum: 3, client: '@lauraijajipay', date: '26/10/2026' },
+          { profileNum: 4, client: '+57 311 6138125', date: '4/11/2026' }
+        ]},
+
+        // DISNEY+ PREMIUM (EXPRESS+)
+        { platform: 'Disney+ Premium + 7 ESPN (Express+)', category: 'Express+', email: 'quintero40768@bigstoreoficial.com', password: 'pass272829', maxProfiles: 7, soldProfiles: [
+          { profileNum: 1, client: '+57 310 5451374', date: '17/10/2026' },
+          { profileNum: 2, client: '322 7882451', date: '17/10/2026' },
+          { profileNum: 3, client: '@sergiocaicedo_9', date: '17/10/2026' },
+          { profileNum: 4, client: '@karol_Vanesa1', date: '17/10/2026' },
+          { profileNum: 5, client: '+57 314 7398655', date: '17/10/2026' },
+          { profileNum: 6, client: '+57 317 4772363', date: '17/10/2026' },
+          { profileNum: 7, client: '+57 322 5270586', date: '17/10/2026' }
+        ]},
+        { platform: 'Disney+ Premium + 7 ESPN (Express+)', category: 'Express+', email: 'carlosgarciapuma55+plus@gmail.com', password: 'pass272829', maxProfiles: 7, soldProfiles: [
+          { profileNum: 1, client: '52 1 461 259 7814', date: '3/11/2026' },
+          { profileNum: 2, client: '@joseortizjs@ortiz__024', date: '4/11/2026' },
+          { profileNum: 3, client: '@juang_momp', date: '4/11/2026' }
+        ]},
+
+        // HBO MAX PLATINO (EXPRESS+)
+        { platform: 'HBO Max Platino (Express+)', category: 'Express+', email: 'danielbigstore26+3@hotmail.com', password: 'pass272829', maxProfiles: 5, soldProfiles: [
+          { profileNum: 1, client: '313 4677726', date: '17/10/2026' },
+          { profileNum: 2, client: '@wanpalo', date: '17/10/2026' },
+          { profileNum: 3, client: '+57 320 6847846', date: '17/10/2026' },
+          { profileNum: 4, client: '+57 321 3053335', date: '17/10/2026' },
+          { profileNum: 5, client: '52 1 461 151 8444', date: '17/10/2026' }
+        ]},
+        { platform: 'HBO Max Platino (Express+)', category: 'Express+', email: 'podhare+2m@bigstoreoficial.com', password: 'pass272829', maxProfiles: 5, soldProfiles: [
+          { profileNum: 1, client: '+52 412 177 6306', date: '2/11/2026' },
+          { profileNum: 2, client: '@YinaCampo', date: '2/11/2026' },
+          { profileNum: 3, client: '@Gabriel_Macea_Reyes', date: '2/11/2026' },
+          { profileNum: 4, client: '@angelaaaso', date: '2/11/2026' },
+          { profileNum: 5, client: '+1 (725) 212‑6063', date: '2/11/2026' }
+        ]},
+
+        // ORIGINAL ACCOUNTS SAMPLE
+        { platform: 'Spotify Premium (1 Mes)', category: 'Original', email: 'spotify1@andrades.com', password: 'pass272829', maxProfiles: 1, soldProfiles: [
+          { profileNum: 1, client: '@carlos_musica', date: '1/11/2026' }
+        ]},
+        { platform: 'Claude Pro (Cuenta Privada)', category: 'Original', email: 'claudepro@andrades.com', password: 'pass272829', maxProfiles: 1, soldProfiles: [
+          { profileNum: 1, client: '@dev_marcos', date: '3/11/2026' }
+        ]}
+      ];
+
+      // Convert sold profiles into aggregate sales array for metrics
+      let orderCounter = 1;
+      const initialSales = [];
+
+      sampleAccounts.forEach(acc => {
+        const item = window.CATALOG_CATALOG[acc.platform] || { price: 8000, cost: 4000, name: acc.platform, category: 'Express+' };
+        (acc.soldProfiles || []).forEach(sp => {
+          const price = item.price || 8000;
+          const cost = item.cost || 4000;
+          initialSales.push({
+            id: 'sale_' + Math.random(),
+            orderNum: orderCounter++,
+            modality: acc.category,
+            platformKey: acc.platform,
+            platform: item.name,
+            category: acc.category,
+            serviceDetail: item.detail || '',
+            email: acc.email,
+            password: acc.password,
+            profile: `P${sp.profileNum}`,
+            profileNum: sp.profileNum,
+            client: sp.client,
+            price: price,
+            cost: cost,
+            profit: price - cost,
+            dateFormatted: sp.date,
+            dateIso: '2026-11-04',
+            timestamp: Date.now() - (orderCounter * 100000)
+          });
+        });
+      });
+
+      for (const acc of sampleAccounts) {
+        if (db && userId) {
+          await addDoc(collection(db, 'artifacts', appId, 'users', userId, 'accounts'), acc);
+        } else {
+          window.state.accounts.push({ id: 'acc_' + Math.random(), ...acc });
+        }
+      }
+
+      for (const sale of initialSales) {
+        if (db && userId) {
+          await addDoc(collection(db, 'artifacts', appId, 'users', userId, 'sales'), sale);
+        } else {
+          window.state.sales.push(sale);
+        }
+      }
+
+      if (!db) saveLocalStorageData();
+    }
+
+    function loadLocalStorageData() {
+      const savedAcc = localStorage.getItem('andrades_accounts_v4');
+      const savedSales = localStorage.getItem('andrades_sales_v4');
+      if (savedAcc) window.state.accounts = JSON.parse(savedAcc);
+      if (savedSales) window.state.sales = JSON.parse(savedSales);
+
+      if (window.state.accounts.length === 0) seedInitialAccounts(null);
+      renderCurrentView();
+      updateSidebarStock();
+    }
+
+    function saveLocalStorageData() {
+      localStorage.setItem('andrades_accounts_v4', JSON.stringify(window.state.accounts));
+      localStorage.setItem('andrades_sales_v4', JSON.stringify(window.state.sales));
+    }
+
+    // ROUND-ROBIN DISPENSER
+    window.findNextAvailableProfileSlot = function(platformName) {
+      const accounts = window.state.accounts.filter(a => a.platform === platformName);
+      if (accounts.length === 0) return null;
+
+      const defaultMax = window.CATALOG_CATALOG[platformName]?.maxProfiles || 5;
+
+      for (let p = 1; p <= 10; p++) {
+        for (let i = 0; i < accounts.length; i++) {
+          const acc = accounts[i];
+          const maxP = acc.maxProfiles || defaultMax;
+          if (p <= maxP) {
+            const soldList = (acc.soldProfiles || []).map(s => typeof s === 'object' ? s.profileNum : s);
+            if (!soldList.includes(p)) {
+              return {
+                account: acc,
+                profileNum: p,
+                profileLabel: `P${p}`
+              };
+            }
+          }
+        }
+      }
+      return null;
+    };
+
+    window.updateNextProfileCandidate = function() {
+      const platformKey = document.getElementById('del-platform').value;
+      const candidate = findNextAvailableProfileSlot(platformKey);
+      window.state.nextCandidate = candidate;
+
+      const bannerText = document.getElementById('rr-next-assignment-text');
+      const emailInput = document.getElementById('del-email');
+      const profileInput = document.getElementById('del-profile');
+
+      if (candidate) {
+        emailInput.value = candidate.account.email;
+        profileInput.value = candidate.profileLabel;
+
+        bannerText.innerHTML = `<span class="text-[#00f2fe] font-bold">${candidate.account.email}</span> &rarr; <span class="text-[#ff007f] font-extrabold">${candidate.profileLabel}</span>`;
+      } else {
+        emailInput.value = 'SIN CUENTAS LIBRES';
+        profileInput.value = 'N/A';
+
+        bannerText.innerHTML = `<span class="text-rose-400 font-extrabold">⚠️ ¡Sin cuentas en stock! Carga cuentas madre en Inventario</span>`;
+      }
+
+      updateLivePreviewText();
+      updateLiveProfit();
+    };
+
+    window.setDeliveryModalityFilter = function(modality) {
+      window.state.activeModalityFilter = modality;
+      
+      const btnExpress = document.getElementById('mod-toggle-express');
+      const btnOriginal = document.getElementById('mod-toggle-original');
+      const title = document.getElementById('catalog-section-title');
+
+      if (modality === 'Express+') {
+        btnExpress.className = "px-4 py-2 rounded-lg text-xs font-black transition-all bg-gradient-to-r from-[#00f2fe] to-purple-600 text-white shadow-md";
+        btnOriginal.className = "px-4 py-2 rounded-lg text-xs font-black transition-all text-slate-400 hover:text-white";
+        title.innerText = "🚀 Opciones Disponibles en Modalidad Express+";
+      } else {
+        btnOriginal.className = "px-4 py-2 rounded-lg text-xs font-black transition-all bg-gradient-to-r from-amber-500 to-orange-600 text-white shadow-md";
+        btnExpress.className = "px-4 py-2 rounded-lg text-xs font-black transition-all text-slate-400 hover:text-white";
+        title.innerText = "⭐ Opciones Disponibles en Modalidad Original (30 Días)";
+      }
+
+      renderPlatformPillsAndDropdown();
+    };
+
+    window.onPlatformSelectChange = function() {
+      const key = document.getElementById('del-platform').value;
+      const item = window.CATALOG_CATALOG[key];
+
+      if (item) {
+        document.getElementById('del-detail').value = item.detail || '';
+        document.getElementById('del-price').value = item.price;
+        document.getElementById('del-cost').value = item.cost;
+      }
+
+      updateNextProfileCandidate();
+    };
+
+    window.selectFastCatalogItem = function(key) {
+      document.getElementById('del-platform').value = key;
+      onPlatformSelectChange();
+    };
+
+    window.formatCOP = function(val) {
+      return "$ " + Math.round(val).toLocaleString('es-CO') + " COP";
+    };
+
+    window.updateLivePreviewText = function() {
+      const key = document.getElementById('del-platform').value;
+      const item = window.CATALOG_CATALOG[key] || { name: key };
+      const detail = document.getElementById('del-detail').value.trim();
+
+      const email = document.getElementById('del-email').value.trim() || 'userbpink@shaivitespro.com';
+      const profile = document.getElementById('del-profile').value.trim() || 'P1';
+      const client = document.getElementById('del-client').value.trim() || 'Cliente Ejemplo';
+
+      let password = 'pass272829';
+      if (window.state.nextCandidate && window.state.nextCandidate.account) {
+        password = window.state.nextCandidate.account.password;
+      }
+
+      const fullService = detail ? `${item.name} ${detail}` : item.name;
+
+      const template = `🛒 Servicio: ${fullService} - 
+
+✉️ Detalles: Correo: ${email}
+Acceso: ${password}
+Perfil: ${profile}
+
+📦 Referencia: ${client}
+
+🙏 ¡Gracias por tu compra en Andrade's STREAMING! Estamos aquí para cualquier consulta.`;
+
+      document.getElementById('deliver-preview-text').innerText = template;
+      document.getElementById('preview-time-badge').innerText = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    };
+
+    window.updateLiveProfit = function() {
+      const price = parseFloat(document.getElementById('del-price').value) || 0;
+      const cost = parseFloat(document.getElementById('del-cost').value) || 0;
+      const profit = price - cost;
+      const margin = price > 0 ? ((profit / price) * 100).toFixed(1) : 0;
+
+      const badge = document.getElementById('del-profit-badge');
+      const marginBadge = document.getElementById('del-margin-badge');
+
+      badge.innerText = formatCOP(profit);
+      badge.className = profit < 0 ? "text-xl font-black text-rose-400" : "text-xl font-black text-emerald-400";
+
+      marginBadge.innerText = `Margen: ${margin}%`;
+    };
+
+    window.copyDeliveryTextDirect = function() {
+      const text = document.getElementById('deliver-preview-text').innerText;
+      copyToClipboard(text);
+      showToast("¡Plantilla de WhatsApp copiada!");
+    };
+
+    // FAST DELIVERY EXECUTION
+    window.handleExecuteFastDelivery = async function(e) {
+      e.preventDefault();
+
+      const key = document.getElementById('del-platform').value;
+      const item = window.CATALOG_CATALOG[key] || { name: key };
+      const serviceDetail = document.getElementById('del-detail').value.trim();
+      const client = document.getElementById('del-client').value.trim();
+      const price = parseFloat(document.getElementById('del-price').value) || 0;
+      const cost = parseFloat(document.getElementById('del-cost').value) || 0;
+      const profit = price - cost;
+
+      const candidate = window.state.nextCandidate;
+      if (!candidate) {
+        showToast("No hay stock disponible para esta plataforma. Carga cuentas madre.", "error");
+        return;
+      }
+
+      const now = new Date();
+      const formattedDate = now.getDate() + '/' + (now.getMonth() + 1) + '/' + now.getFullYear();
+
+      const nextOrderNum = (window.state.sales.reduce((max, s) => Math.max(max, s.orderNum || 0), 0)) + 1;
+
+      const saleData = {
+        orderNum: nextOrderNum,
+        modality: item.category || window.state.activeModalityFilter,
+        platformKey: key,
+        platform: item.name,
+        category: item.category || 'General',
+        serviceDetail,
+        email: candidate.account.email,
+        password: candidate.account.password,
+        profile: candidate.profileLabel,
+        profileNum: candidate.profileNum,
+        client,
+        price,
+        cost,
+        profit,
+        dateFormatted: formattedDate,
+        dateIso: now.toISOString().split('T')[0],
+        timestamp: now.getTime(),
+        accountId: candidate.account.id
+      };
+
+      try {
+        if (db && window.state.user) {
+          const userId = window.state.user.uid;
+          await addDoc(collection(db, 'artifacts', appId, 'users', userId, 'sales'), saleData);
+
+          const acc = candidate.account;
+          const soldList = acc.soldProfiles || [];
+          soldList.push({
+            profileNum: candidate.profileNum,
+            client,
+            date: formattedDate,
+            orderNum: nextOrderNum
+          });
+
+          await updateDoc(doc(db, 'artifacts', appId, 'users', userId, 'accounts', acc.id), {
+            soldProfiles: soldList
+          });
+        } else {
+          window.state.sales.unshift({ id: 'sale_' + Date.now(), ...saleData });
+          
+          const acc = candidate.account;
+          acc.soldProfiles = acc.soldProfiles || [];
+          acc.soldProfiles.push({
+            profileNum: candidate.profileNum,
+            client,
+            date: formattedDate,
+            orderNum: nextOrderNum
+          });
+
+          saveLocalStorageData();
+        }
+
+        copyDeliveryTextDirect();
+        showToast(`¡Entrega #${nextOrderNum} despachada y copiada!`);
+
+        document.getElementById('del-client').value = '';
+        updateNextProfileCandidate();
+        
+        if (saleData.modality === 'Express+') {
+          switchTab('express-matrix');
+        } else {
+          switchTab('original-section');
+        }
+      } catch (err) {
+        console.error("Error despachando:", err);
+        showToast("Error al procesar la entrega", "error");
+      }
+    };
+
+    // TAB 2: MATRIZ EXCEL EXPRESS+ (EXACT SPREADSHEET PHOTO LAYOUT)
+    window.filterMatrixPlatform = function(platformKey) {
+      window.state.matrixPlatformFilter = platformKey;
+      
+      const pills = ['all', 'prime', 'netflix', 'disney', 'hbo'];
+      pills.forEach(p => {
+        const btn = document.getElementById(`matrix-pill-${p}`);
+        if (btn) {
+          btn.className = "px-4 py-2 rounded-xl text-xs font-bold bg-[#181a33] text-slate-300 hover:text-white border border-[#1f223d]";
+        }
+      });
+
+      let activeId = 'matrix-pill-all';
+      if (platformKey.includes('Prime')) activeId = 'matrix-pill-prime';
+      else if (platformKey.includes('Netflix')) activeId = 'matrix-pill-netflix';
+      else if (platformKey.includes('Disney')) activeId = 'matrix-pill-disney';
+      else if (platformKey.includes('HBO') || platformKey.includes('Max')) activeId = 'matrix-pill-hbo';
+
+      const activeBtn = document.getElementById(activeId);
+      if (activeBtn) activeBtn.className = "px-4 py-2 rounded-xl text-xs font-black bg-[#00f2fe] text-slate-950 shadow-md";
+
+      renderExpressMatrixGrid();
+    };
+
+    window.renderExpressMatrixGrid = function() {
+      const tbody = document.getElementById('express-matrix-body');
+      tbody.innerHTML = '';
+
+      const filter = window.state.matrixPlatformFilter;
+      const search = (document.getElementById('matrix-search-input').value || '').toLowerCase();
+
+      // Get all Express+ accounts
+      let expressAccounts = window.state.accounts.filter(a => {
+        const cat = a.category || window.CATALOG_CATALOG[a.platform]?.category;
+        return cat === 'Express+';
+      });
+
+      if (filter !== 'all') {
+        expressAccounts = expressAccounts.filter(a => a.platform === filter);
+      }
+
+      if (expressAccounts.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="8" class="py-12 text-center text-slate-500">No hay cuentas Express+ registradas en esta categoría.</td></tr>`;
+        return;
+      }
+
+      // Group accounts by Platform in exact user order: Prime, Netflix, Disney, Max
+      const platformOrder = [
+        'Prime Video (Express+)',
+        'Netflix 4K UHD (Express+)',
+        'Disney+ Premium + 7 ESPN (Express+)',
+        'HBO Max Platino (Express+)'
+      ];
+
+      const groupedByPlatform = {};
+      expressAccounts.forEach(acc => {
+        const pName = acc.platform;
+        if (!groupedByPlatform[pName]) groupedByPlatform[pName] = [];
+        groupedByPlatform[pName].push(acc);
+      });
+
+      let totalRenderedRows = 0;
+
+      platformOrder.forEach(platformKey => {
+        const accList = groupedByPlatform[platformKey];
+        if (!accList || accList.length === 0) return;
+
+        const cfg = window.CATALOG_CATALOG[platformKey] || { name: platformKey, badge: 'bg-slate-700 text-white' };
+
+        // Render Platform Header Divider in Excel Sheet
+        const platHeader = document.createElement('tr');
+        platHeader.className = "bg-[#16182c] border-y border-[#232747]";
+        platHeader.innerHTML = `
+          <td colspan="8" class="py-2.5 px-4 font-black uppercase tracking-wider text-xs text-[#00f2fe] bg-gradient-to-r from-[#16182c] via-[#1f223d] to-[#16182c]">
+            <i class="fa-solid ${cfg.icon} mr-2"></i> ${cfg.name} (Modalidad Express+)
+          </td>
+        `;
+        tbody.appendChild(platHeader);
+
+        let accountNum = 1;
+
+        accList.forEach(acc => {
+          const maxP = acc.maxProfiles || 5;
+          const soldRaw = acc.soldProfiles || [];
+          
+          const soldMap = {};
+          soldRaw.forEach(item => {
+            if (typeof item === 'object') {
+              soldMap[item.profileNum] = item;
+            } else {
+              soldMap[item] = { profileNum: item, client: 'Vendido', date: '--' };
+            }
+          });
+
+          for (let p = 1; p <= maxP; p++) {
+            const isSold = !!soldMap[p];
+            const info = soldMap[p] || {};
+
+            const clientText = info.client || '';
+            const dateText = info.date || '--';
+
+            // Filter Search Match
+            if (search) {
+              const fullText = (acc.email + ' ' + clientText + ' P' + p + ' ' + dateText).toLowerCase();
+              if (!fullText.includes(search)) continue;
+            }
+
+            const tr = document.createElement('tr');
+            tr.className = isSold ? "bg-[#121426] hover:bg-[#181a33]" : "bg-[#0c0d1a] hover:bg-[#15172b]";
+
+            tr.innerHTML = `
+              <td class="py-2 px-3 text-center font-bold text-slate-400 border-r border-[#1f223d]">${p === 1 ? accountNum : ''}</td>
+              <td class="py-2 px-4 text-slate-400 font-semibold">${cfg.name}</td>
+              <td class="py-2 px-6 font-bold text-slate-100 flex items-center justify-between group">
+                <span>${escapeHtml(acc.email)}</span>
+                ${p === 1 ? `<button onclick="openEditAccountModal('${acc.id}')" class="text-slate-500 hover:text-[#00f2fe] text-xs px-2 py-1 rounded bg-[#16182c] hover:bg-[#1f223d] border border-[#232747] transition-all flex items-center space-x-1" title="Editar correo/clave por caída"><i class="fa-solid fa-pen-to-square"></i><span class="text-[10px]">Editar</span></button>` : ''}
+              </td>
+              <td class="py-2 px-3 text-center font-black text-[#00f2fe]">P${p}</td>
+              <td class="py-2 px-4 text-slate-400">${isSold ? escapeHtml(dateText) : '-'}</td>
+              <td class="py-2 px-6 font-extrabold ${isSold ? 'text-amber-300' : 'text-slate-600'}">
+                ${isSold ? escapeHtml(clientText) : '<i>Disponible</i>'}
+              </td>
+              <td class="py-2 px-3 text-center">
+                <span class="px-2 py-0.5 rounded text-[10px] font-extrabold ${isSold ? 'bg-rose-500/20 text-rose-400 border border-rose-500/30' : 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30'}">
+                  ${isSold ? 'VENDIDO' : 'LIBRE'}
+                </span>
+              </td>
+              <td class="py-2 px-3 text-center">
+                <button onclick="toggleSlotStatus('${acc.id}', ${p})" class="text-[11px] font-bold text-slate-400 hover:text-[#00f2fe] underline">
+                  ${isSold ? 'Liberar' : 'Marcar'}
+                </button>
+              </td>
+            `;
+            tbody.appendChild(tr);
+            totalRenderedRows++;
+          }
+          accountNum++;
+        });
+      });
+
+      if (totalRenderedRows === 0) {
+        tbody.innerHTML = `<tr><td colspan="8" class="py-10 text-center text-slate-500">No hay filas que coincidan con la búsqueda.</td></tr>`;
+      }
+    };
+
+    // TAB 3: SECCIÓN MODALIDAD ORIGINAL ⭐
+    window.renderOriginalSection = function() {
+      const cardsContainer = document.getElementById('original-catalog-cards');
+      const salesBody = document.getElementById('original-sales-body');
+
+      cardsContainer.innerHTML = '';
+      salesBody.innerHTML = '';
+
+      const originalItems = Object.keys(window.CATALOG_CATALOG).filter(k => window.CATALOG_CATALOG[k].category === 'Original');
+
+      originalItems.forEach(key => {
+        const item = window.CATALOG_CATALOG[key];
+        const soldSales = window.state.sales.filter(s => s.platformKey === key);
+        let totalProfit = 0;
+        soldSales.forEach(s => totalProfit += (s.profit || 0));
+
+        const card = document.createElement('div');
+        card.className = "bg-[#121426] border border-[#1f223d] rounded-2xl p-5 space-y-3 shadow-lg";
+        card.innerHTML = `
+          <div class="flex items-center justify-between">
+            <span class="w-9 h-9 rounded-xl ${item.badge} border flex items-center justify-center font-bold">
+              <i class="fa-solid ${item.icon}"></i>
+            </span>
+            <span class="text-[10px] font-black text-amber-400 uppercase tracking-wider">Original 30 Días</span>
+          </div>
+          <div>
+            <h4 class="font-extrabold text-white text-sm">${item.name}</h4>
+            <p class="text-xs text-slate-400 mt-0.5">Venta: <strong>$${item.price.toLocaleString('es-CO')} COP</strong> | Costo: $${item.cost.toLocaleString('es-CO')} COP</p>
+          </div>
+          <div class="pt-2 border-t border-[#1f223d] flex items-center justify-between text-xs font-mono-code">
+            <span class="text-slate-400">${soldSales.length} entregas</span>
+            <span class="font-black text-emerald-400">+${formatCOP(totalProfit)}</span>
+          </div>
+        `;
+        cardsContainer.appendChild(card);
+      });
+
+      // Filter Original Sales History
+      const originalSales = window.state.sales.filter(s => s.modality === 'Original');
+
+      if (originalSales.length === 0) {
+        salesBody.innerHTML = `<tr><td colspan="7" class="py-8 text-center text-slate-500">No hay ventas registradas en Modalidad Original.</td></tr>`;
+      } else {
+        originalSales.forEach(s => {
+          const tr = document.createElement('tr');
+          tr.className = "hover:bg-[#181a33] transition-colors";
+          tr.innerHTML = `
+            <td class="py-3 px-4 text-slate-400">${s.dateFormatted || '--'}</td>
+            <td class="py-3 px-4 font-bold text-white">${escapeHtml(s.platform)}</td>
+            <td class="py-3 px-4 text-slate-200">${escapeHtml(s.email)}</td>
+            <td class="py-3 px-4 font-bold text-amber-300">${escapeHtml(s.client)}</td>
+            <td class="py-3 px-4 text-right text-slate-300">${formatCOP(s.price || 0)}</td>
+            <td class="py-3 px-4 text-right font-black text-emerald-400">+${formatCOP(s.profit || 0)}</td>
+            <td class="py-3 px-4 text-center">
+              <button onclick="copyHistoricWhatsApp('${s.id}')" class="px-2.5 py-1 bg-whatsapp-600 hover:bg-whatsapp-500 text-white font-bold text-[11px] rounded-lg">
+                Copiar
+              </button>
+            </td>
+          `;
+          salesBody.appendChild(tr);
+        });
+      }
+    };
+
+    window.copyHistoricWhatsApp = function(saleId) {
+      const s = window.state.sales.find(x => x.id === saleId);
+      if (!s) return;
+
+      const template = `🛒 Servicio: ${s.platform} - 
+
+✉️ Detalles: Correo: ${s.email}
+Acceso: ${s.password}
+Perfil: ${s.profile}
+
+📦 Referencia: ${s.client}
+
+🙏 ¡Gracias por tu compra en Andrade's STREAMING! Estamos aquí para cualquier consulta.`;
+
+      copyToClipboard(template);
+      showToast("Mensaje de entrega copiado a WhatsApp");
+    };
+
+    // BULK ACCOUNTS IMPORT
+    window.openBulkModal = function() {
+      document.getElementById('modal-bulk').classList.remove('hidden');
+      updateBulkMaxProfilesDefault();
+    };
+
+    window.closeBulkModal = function() {
+      document.getElementById('modal-bulk').classList.add('hidden');
+    };
+
+    window.updateBulkMaxProfilesDefault = function() {
+      const key = document.getElementById('bulk-platform').value;
+      const def = window.CATALOG_CATALOG[key]?.maxProfiles || 5;
+      document.getElementById('bulk-max-profiles').value = def;
+    };
+
+    window.processBulkAccountsImport = async function() {
+      const platformKey = document.getElementById('bulk-platform').value;
+      const cat = window.CATALOG_CATALOG[platformKey]?.category || 'Express+';
+      const maxProfiles = parseInt(document.getElementById('bulk-max-profiles').value, 10) || 5;
+      const text = document.getElementById('bulk-input-text').value;
+
+      if (!text.trim()) {
+        showToast("Pega al menos una cuenta madre", "error");
+        return;
+      }
+
+      const lines = text.split('\n');
+      let count = 0;
+
+      for (let line of lines) {
+        line = line.trim();
+        if (!line) continue;
+
+        let parts = line.split(/[:,\s]+/);
+        if (parts.length >= 2) {
+          const email = parts[0].trim();
+          const password = parts[1].trim();
+
+          if (email && password) {
+            const accObj = {
+              platform: platformKey,
+              category: cat,
+              email,
+              password,
+              maxProfiles,
+              soldProfiles: [],
+              addedAt: Date.now()
+            };
+
+            if (db && window.state.user) {
+              await addDoc(collection(db, 'artifacts', appId, 'users', window.state.user.uid, 'accounts'), accObj);
+            } else {
+              window.state.accounts.push({ id: 'acc_' + Math.random(), ...accObj });
+            }
+            count++;
+          }
+        }
+      }
+
+      if (!db) saveLocalStorageData();
+
+      document.getElementById('bulk-input-text').value = '';
+      closeBulkModal();
+      showToast(`¡Cargadas ${count} cuentas madre!`);
+      
+      updateNextProfileCandidate();
+      updateSidebarStock();
+      renderCurrentView();
+    };
+
+    // EDIT ACCOUNT CREDENTIALS
+    window.openEditAccountModal = function(accId) {
+      const acc = window.state.accounts.find(a => a.id === accId);
+      if (!acc) return;
+
+      document.getElementById('edit-acc-id').value = accId;
+      document.getElementById('edit-acc-email').value = acc.email || '';
+      document.getElementById('edit-acc-password').value = acc.password || '';
+      document.getElementById('modal-edit-account').classList.remove('hidden');
+    };
+
+    window.closeEditAccountModal = function() {
+      document.getElementById('modal-edit-account').classList.add('hidden');
+    };
+
+    window.saveAccountCredentials = async function() {
+      const accId = document.getElementById('edit-acc-id').value;
+      const newEmail = document.getElementById('edit-acc-email').value.trim();
+      const newPassword = document.getElementById('edit-acc-password').value.trim();
+
+      if (!newEmail || !newPassword) {
+        showToast("Ingresa un correo y contraseña válidos", "error");
+        return;
+      }
+
+      const acc = window.state.accounts.find(a => a.id === accId);
+      if (!acc) return;
+
+      const oldEmail = acc.email;
+
+      // Update local account model
+      acc.email = newEmail;
+      acc.password = newPassword;
+
+      // Also update sales associated with this account so WhatsApp text regeneration gets updated credentials
+      const relatedSales = window.state.sales.filter(s => s.accountId === accId || s.email === oldEmail);
+      relatedSales.forEach(s => {
+        s.email = newEmail;
+        s.password = newPassword;
+        s.accountId = accId;
+      });
+
+      try {
+        if (db && window.state.user) {
+          const userId = window.state.user.uid;
+          await updateDoc(doc(db, 'artifacts', appId, 'users', userId, 'accounts', accId), {
+            email: newEmail,
+            password: newPassword
+          });
+
+          for (const s of relatedSales) {
+            if (s.id && !s.id.startsWith('sale_')) {
+              await updateDoc(doc(db, 'artifacts', appId, 'users', userId, 'sales', s.id), {
+                email: newEmail,
+                password: newPassword
+              });
+            }
+          }
+        } else {
+          saveLocalStorageData();
+        }
+
+        closeEditAccountModal();
+        showToast("¡Credenciales de la cuenta actualizadas!");
+
+        renderCurrentView();
+        updateNextProfileCandidate();
+      } catch (err) {
+        console.error("Error al actualizar credenciales:", err);
+        showToast("Error al guardar cambios", "error");
+      }
+    };
+
+    // TAB 4: INVENTORY VIEW
+    window.renderInventoryView = function() {
+      const container = document.getElementById('inventory-accounts-container');
+      container.innerHTML = '';
+
+      const filter = window.state.inventoryFilter;
+      let accounts = window.state.accounts;
+
+      if (filter !== 'all') {
+        accounts = accounts.filter(a => a.platform === filter);
+      }
+
+      if (accounts.length === 0) {
+        container.innerHTML = `
+          <div class="bg-[#121426] border border-[#1f223d] rounded-2xl p-10 text-center space-y-3">
+            <i class="fa-solid fa-boxes-stacked text-4xl text-slate-600"></i>
+            <h3 class="text-base font-bold text-slate-300">No hay cuentas madre en esta categoría</h3>
+            <button onclick="openBulkModal()" class="px-4 py-2 bg-gradient-to-r from-[#00f2fe] to-[#ff007f] text-white text-xs font-bold rounded-xl shadow-lg inline-block">
+              + Cargar Cuentas Madre
+            </button>
+          </div>
+        `;
+        return;
+      }
+
+      accounts.forEach((acc) => {
+        const cfg = window.CATALOG_CATALOG[acc.platform] || window.CATALOG_CATALOG['Netflix 4K UHD (Express+)'];
+        const soldRaw = acc.soldProfiles || [];
+        const maxP = acc.maxProfiles || 5;
+
+        const soldMap = {};
+        soldRaw.forEach(item => {
+          if (typeof item === 'object') {
+            soldMap[item.profileNum] = item;
+          } else {
+            soldMap[item] = { profileNum: item, client: 'Vendido', date: '' };
+          }
+        });
+
+        let profileSlotsHtml = '';
+        for (let p = 1; p <= maxP; p++) {
+          const isSold = !!soldMap[p];
+          const info = soldMap[p];
+
+          profileSlotsHtml += `
+            <div class="flex flex-col items-center p-2 rounded-xl border text-center transition-all ${isSold ? 'bg-rose-500/10 border-rose-500/30 text-rose-400' : 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400'}">
+              <span class="text-xs font-black">P${p}</span>
+              <span class="text-[9px] font-bold uppercase mt-0.5">${isSold ? 'VENDIDO' : 'LIBRE'}</span>
+              ${isSold ? `<span class="text-[8px] text-amber-300 font-bold truncate max-w-[70px]" title="${escapeHtml(info.client)}">${escapeHtml(info.client)}</span>` : ''}
+              <button onclick="toggleSlotStatus('${acc.id}', ${p})" class="mt-1 text-[9px] underline opacity-70 hover:opacity-100">
+                ${isSold ? 'Liberar' : 'Marcar'}
+              </button>
+            </div>
+          `;
+        }
+
+        const card = document.createElement('div');
+        card.className = "bg-[#121426] border border-[#1f223d] rounded-2xl p-5 shadow-lg space-y-4";
+        card.innerHTML = `
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#1f223d] pb-3">
+            <div class="flex items-center space-x-3">
+              <span class="w-8 h-8 rounded-xl ${cfg.badge} border flex items-center justify-center font-bold">
+                <i class="fa-solid ${cfg.icon}"></i>
+              </span>
+              <div>
+                <span class="text-[10px] text-slate-400 font-bold uppercase">[${acc.category || 'General'}] ${acc.platform}</span>
+                <h4 class="font-mono-code font-bold text-white text-sm break-all">${escapeHtml(acc.email)}</h4>
+                <p class="text-xs font-mono-code text-slate-400">Clave: <span class="text-slate-200">${escapeHtml(acc.password)}</span></p>
+              </div>
+            </div>
+
+            <div class="flex items-center space-x-2">
+              <span class="text-xs font-mono-code text-slate-400">Slots: <strong class="text-[#00f2fe]">${Object.keys(soldMap).length}/${maxP}</strong></span>
+              <button onclick="openEditAccountModal('${acc.id}')" class="px-2.5 py-1.5 bg-[#00f2fe]/10 hover:bg-[#00f2fe]/20 border border-[#00f2fe]/30 text-[#00f2fe] rounded-lg text-xs font-bold flex items-center space-x-1" title="Editar correo y clave por caída">
+                <i class="fa-solid fa-pen-to-square"></i>
+                <span class="inline">Editar</span>
+              </button>
+              <button onclick="deleteMotherAccount('${acc.id}')" class="p-2 bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 rounded-lg text-xs" title="Eliminar cuenta">
+                <i class="fa-solid fa-trash"></i>
+              </button>
+            </div>
+          </div>
+
+          <div>
+            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-2">Ranuras de Perfiles:</span>
+            <div class="grid grid-cols-5 sm:grid-cols-7 gap-2">
+              ${profileSlotsHtml}
+            </div>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    };
+
+    window.toggleSlotStatus = async function(accId, profileNum) {
+      const acc = window.state.accounts.find(a => a.id === accId);
+      if (!acc) return;
+
+      acc.soldProfiles = acc.soldProfiles || [];
+      const index = acc.soldProfiles.findIndex(p => (typeof p === 'object' ? p.profileNum : p) === profileNum);
+
+      if (index >= 0) {
+        acc.soldProfiles.splice(index, 1);
+      } else {
+        acc.soldProfiles.push({ profileNum, client: 'Manual', date: 'Manual' });
+      }
+
+      if (db && window.state.user) {
+        await updateDoc(doc(db, 'artifacts', appId, 'users', window.state.user.uid, 'accounts', accId), {
+          soldProfiles: acc.soldProfiles
+        });
+      } else {
+        saveLocalStorageData();
+      }
+
+      renderInventoryView();
+      renderExpressMatrixGrid();
+      updateSidebarStock();
+      updateNextProfileCandidate();
+      showToast(`Ranura P${profileNum} actualizada`);
+    };
+
+    window.deleteMotherAccount = async function(accId) {
+      if (!confirm("¿Eliminar esta cuenta madre del inventario?")) return;
+
+      if (db && window.state.user) {
+        await deleteDoc(doc(db, 'artifacts', appId, 'users', window.state.user.uid, 'accounts', accId));
+      } else {
+        window.state.accounts = window.state.accounts.filter(a => a.id !== accId);
+        saveLocalStorageData();
+      }
+
+      showToast("Cuenta eliminada");
+      renderInventoryView();
+      renderExpressMatrixGrid();
+      updateSidebarStock();
+      updateNextProfileCandidate();
+    };
+
+    // TAB 5: COMBINED DASHBOARD METRICS
+    window.renderDashboardMetrics = function() {
+      const period = document.getElementById('dashboard-period').value;
+      const sales = filterSalesByPeriod(window.state.sales, period);
+
+      let revenue = 0, cost = 0, profit = 0;
+      let expressProfit = 0, expressCount = 0;
+      let originalProfit = 0, originalCount = 0;
+
+      sales.forEach(s => {
+        revenue += (s.price || 0);
+        cost += (s.cost || 0);
+        profit += (s.profit || 0);
+
+        if (s.modality === 'Original' || s.category === 'Original') {
+          originalProfit += (s.profit || 0);
+          originalCount++;
+        } else {
+          expressProfit += (s.profit || 0);
+          expressCount++;
+        }
+      });
+
+      const margin = revenue > 0 ? ((profit / revenue) * 100).toFixed(1) : 0;
+
+      document.getElementById('dash-metric-profit').innerText = formatCOP(profit);
+      document.getElementById('dash-metric-margin').innerText = `Margen General: ${margin}%`;
+
+      document.getElementById('dash-metric-express-profit').innerText = formatCOP(expressProfit);
+      document.getElementById('dash-metric-express-count').innerText = `${expressCount} entregas Express+`;
+
+      document.getElementById('dash-metric-original-profit').innerText = formatCOP(originalProfit);
+      document.getElementById('dash-metric-original-count').innerText = `${originalCount} entregas Originales`;
+
+      document.getElementById('dash-metric-cost').innerText = formatCOP(cost);
+
+      const ctxTrend = document.getElementById('chart-dashboard-trend').getContext('2d');
+      if (dashboardChart) dashboardChart.destroy();
+
+      const platformMap = {};
+      sales.forEach(s => {
+        const plat = s.platform || 'Otro';
+        if (!platformMap[plat]) platformMap[plat] = 0;
+        platformMap[plat] += (s.profit || 0);
+      });
+
+      const labels = Object.keys(platformMap);
+      const data = labels.map(l => platformMap[l]);
+      const colors = labels.map(l => {
+        const item = Object.values(window.CATALOG_CATALOG).find(c => c.name === l);
+        return item ? item.color : '#00f2fe';
+      });
+
+      dashboardChart = new Chart(ctxTrend, {
+        type: 'bar',
+        data: {
+          labels: labels.length ? labels : ['Sin Entregas'],
+          datasets: [{
+            label: 'Ganancia Neta ($ COP)',
+            data: labels.length ? data : [0],
+            backgroundColor: colors.length ? colors : ['#00f2fe'],
+            borderRadius: 8
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { display: false } },
+          scales: {
+            x: { ticks: { color: '#64748b' }, grid: { color: 'rgba(255,255,255,0.05)' } },
+            y: { ticks: { color: '#64748b' }, grid: { color: 'rgba(255,255,255,0.05)' } }
+          }
+        }
+      });
+    };
+
+    function updateSidebarStock() {
+      let available = 0;
+      let totalMax = 0;
+
+      window.state.accounts.forEach(a => {
+        const maxP = a.maxProfiles || 5;
+        const soldCount = (a.soldProfiles || []).length;
+        available += Math.max(0, maxP - soldCount);
+        totalMax += maxP;
+      });
+
+      document.getElementById('sidebar-stock-count').innerText = `${available} Perfiles`;
+      const pct = totalMax > 0 ? (available / totalMax) * 100 : 0;
+      document.getElementById('sidebar-stock-bar').style.width = `${pct}%`;
+    }
+
+    // EXPORT CSV
+    window.exportSalesCSV = function() {
+      if (window.state.sales.length === 0) {
+        showToast("No hay entregas para exportar", "error");
+        return;
+      }
+
+      let csv = "Orden,FechaHora,Modalidad,Plataforma,Correo,Perfil,ClienteContacto,PrecioVentaCOP,CostoCOP,GananciaNetaCOP\n";
+      window.state.sales.forEach(s => {
+        csv += `${s.orderNum || 1},"${s.dateFormatted || ''}","${s.modality || 'Express+'}","${s.platform || ''}","${(s.email || '').replace(/"/g, '""')}","${(s.profile || '').replace(/"/g, '""')}","${(s.client || '').replace(/"/g, '""')}",${s.price || 0},${s.cost || 0},${s.profit || 0}\n`;
+      });
+
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.setAttribute("href", url);
+      link.setAttribute("download", `Andrades_STREAMING_Matriz_${new Date().toISOString().split('T')[0]}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      showToast("Matriz CSV exportada exitosamente");
+    };
+
+    // UTILITIES
+    function filterSalesByPeriod(list, period) {
+      const now = new Date();
+      const todayStr = now.toISOString().split('T')[0];
+
+      if (period === 'today') return list.filter(d => d.dateIso === todayStr);
+      if (period === 'week') {
+        const start = new Date(now);
+        start.setDate(now.getDate() - 7);
+        return list.filter(d => new Date(d.dateIso || d.timestamp) >= start);
+      }
+      if (period === 'month') {
+        const m = now.getMonth(), y = now.getFullYear();
+        return list.filter(d => {
+          if (!d.dateIso) return false;
+          const dt = new Date(d.dateIso + 'T00:00:00');
+          return dt.getMonth() === m && dt.getFullYear() === y;
+        });
+      }
+      return list;
+    }
+
+    function copyToClipboard(text) {
+      const ta = document.createElement("textarea");
+      ta.value = text;
+      ta.style.position = "fixed";
+      ta.style.left = "-9999px";
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand('copy'); } catch(e) {}
+      document.body.removeChild(ta);
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+    function showToast(message, type = 'success') {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      toast.className = `px-4 py-3 rounded-xl shadow-2xl text-xs font-bold text-white flex items-center space-x-2 transition-all transform translate-y-2 opacity-0 ${type === 'success' ? 'bg-gradient-to-r from-[#00f2fe] to-[#7928ca]' : 'bg-rose-600'}`;
+      toast.innerHTML = `<i class="fa-solid ${type === 'success' ? 'fa-circle-check' : 'fa-circle-exclamation'} text-base"></i><span>${message}</span>`;
+      container.appendChild(toast);
+      setTimeout(() => toast.classList.remove('translate-y-2', 'opacity-0'), 10);
+      setTimeout(() => {
+        toast.classList.add('opacity-0');
+        setTimeout(() => toast.remove(), 300);
+      }, 3000);
+    }
+
+    window.switchTab = function(tabName) {
+      window.state.activeTab = tabName;
+      ['deliver', 'express-matrix', 'original-section', 'inventory', 'dashboard'].forEach(t => {
+        const v = document.getElementById(`view-${t}`);
+        if (v) {
+          if (t === tabName) v.classList.remove('hidden');
+          else v.classList.add('hidden');
+        }
+      });
+
+      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('bg-gradient-to-r', 'from-[#00f2fe]', 'to-[#ff007f]', 'text-white'));
+      const activeDesk = document.getElementById(`nav-desktop-${tabName}`);
+      if (activeDesk) activeDesk.classList.add('bg-gradient-to-r', 'from-[#00f2fe]', 'to-[#ff007f]', 'text-white');
+
+      document.querySelectorAll('.nav-btn-mobile').forEach(b => b.classList.remove('text-[#00f2fe]'));
+      const activeMob = document.getElementById(`nav-mobile-${tabName}`);
+      if (activeMob) activeMob.classList.add('text-[#00f2fe]');
+
+      renderCurrentView();
+    };
+
+    function renderCurrentView() {
+      switch (window.state.activeTab) {
+        case 'deliver':
+          updateNextProfileCandidate();
+          break;
+        case 'express-matrix':
+          renderExpressMatrixGrid();
+          break;
+        case 'original-section':
+          renderOriginalSection();
+          break;
+        case 'inventory':
+          renderInventoryView();
+          break;
+        case 'dashboard':
+          renderDashboardMetrics();
+          break;
+      }
+    }
+
+    function renderPlatformPillsAndDropdown() {
+      const pillsContainer = document.getElementById('catalog-active-pills');
+      const selectPlatform = document.getElementById('del-platform');
+      const bulkSelect = document.getElementById('bulk-platform');
+
+      pillsContainer.innerHTML = '';
+      selectPlatform.innerHTML = '';
+      bulkSelect.innerHTML = '';
+
+      const currentModality = window.state.activeModalityFilter;
+
+      Object.keys(window.CATALOG_CATALOG).forEach(key => {
+        const item = window.CATALOG_CATALOG[key];
+
+        // Fill Bulk Select always with all items
+        const bulkOpt = document.createElement('option');
+        bulkOpt.value = key;
+        bulkOpt.innerText = `[${item.category}] ${item.name} (${item.maxProfiles} perfiles)`;
+        bulkSelect.appendChild(bulkOpt);
+
+        if (item.category === currentModality) {
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.onclick = () => selectFastCatalogItem(key);
+          btn.className = `px-3.5 py-2 rounded-xl text-xs font-bold ${item.badge} border transition-transform hover:scale-105 flex items-center space-x-1.5 shadow-sm`;
+          btn.innerHTML = `<i class="fa-solid ${item.icon}"></i><span>${item.name} ($${item.price.toLocaleString('es-CO')} COP)</span>`;
+          pillsContainer.appendChild(btn);
+
+          const opt = document.createElement('option');
+          opt.value = key;
+          opt.innerText = `${item.name} - Venta $${item.price.toLocaleString('es-CO')} COP`;
+          selectPlatform.appendChild(opt);
+        }
+      });
+
+      // Render Inventory Filter Tabs
+      const inventoryFilters = document.getElementById('inventory-platform-filters');
+      if (inventoryFilters) {
+        inventoryFilters.innerHTML = '';
+        const allBtn = document.createElement('button');
+        allBtn.onclick = () => { window.state.inventoryFilter = 'all'; renderInventoryView(); };
+        allBtn.className = "px-3 py-1.5 rounded-xl text-xs font-bold bg-[#181a33] text-white border border-[#1f223d]";
+        allBtn.innerText = "Todas las Cuentas Madre";
+        inventoryFilters.appendChild(allBtn);
+
+        Object.keys(window.CATALOG_CATALOG).forEach(k => {
+          const cfg = window.CATALOG_CATALOG[k];
+          const b = document.createElement('button');
+          b.onclick = () => { window.state.inventoryFilter = k; renderInventoryView(); };
+          b.className = `px-3 py-1.5 rounded-xl text-xs font-bold ${cfg.badge} border hover:opacity-90`;
+          b.innerText = cfg.name;
+          inventoryFilters.appendChild(b);
+        });
+      }
+
+      onPlatformSelectChange();
+    }
+
+    window.addEventListener('load', () => {
+      setDeliveryModalityFilter('Express+');
+      initSystem();
+      window.switchTab('deliver');
+    });
+  </script>
+</body>
+</html>
